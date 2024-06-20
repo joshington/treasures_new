@@ -30,11 +30,13 @@ contract DocStorage  {
 
     struct User {
         string email;
+        string username;
+        bytes32 passwordHash; //store hashed password.
         bool exists;
     }
 
-    uint256 public monthlySubscriptionFee = 1 ether; //set subscription fee
-    uint256 public retrievalFee = 2 ether; //retrieval fee is twice the monthly fee
+    uint256 public monthlySubscriptionFee = 1 * 10 ** 18; //set subscription fee
+    uint256 public retrievalFee = 2 * monthlySubscriptionFee; //retrieval fee is twice the monthly fee
     uint256 public freeTrialPeriod = 14 days;// 2 weeks free trial period
     address public owner;
 
@@ -53,7 +55,7 @@ contract DocStorage  {
     event TrusteeAdded(uint256 documentId, address indexed trustee);
     event TrusteeRemoved(uint256 documentId, address indexed trustee);
     event EmailNotification(address indexed user, string email, string subject, string body);
-
+    event UserLoggedIn(address indexed user, string email);
 
     constructor() payable {
         owner = payable(msg.sender);
@@ -85,13 +87,21 @@ contract DocStorage  {
         _;
     }
 
-    function createUser(string memory email) public {
+    function createUser(string memory email, string memory username, string memory password) public {
         require(!users[msg.sender].exists, "User already exists");
-        users[msg.sender] = User(email, true);
-        userLastPayment[msg.sender] = block.timestamp; //start free trial
+        bytes32 passwordHash = keccak256(abi.encodePacked(password));
+        users[msg.sender] = User(email, username, passwordHash, true);
+        userLastPayment[msg.sender] = block.timestamp; // Start free trial
         emit UserCreated(msg.sender, email);
-        emit EmailNotification(owner, email, "Welcome to Treasures", "Your account has been created successfully");   
+        emit EmailNotification(owner, email, "Welcome to Treasures", "Your account has been created successfully");
     }
+
+    function login(string memory email, string memory password) public  {
+        require(users[msg.sender].exists, "User does not exist");
+        require(keccak256(abi.encodePacked(password)) == users[msg.sender].passwordHash, "Invalid password");
+        emit UserLoggedIn(msg.sender, email);
+    }
+
 
     function uploadDocument(string memory ipfsHash) public hasActiveSubscription   returns (uint256) {
         uint256 documentId = nextDocumentId++;

@@ -1,0 +1,44 @@
+.heroSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    /*background-color: #f9f9f9; */
+    background-color: #E5E4E2;
+    height: 380px;
+}
+
+.heroContent {
+    max-width: 600px;
+    max-height: 800px;
+
+}
+
+.heroContent h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.heroContent p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.ctaButton {
+    padding: 0.8rem 1.5rem;
+    background-color: #FFD700;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 5px;
+}
+
+.heroImage img {
+    width: 700px;
+    max-width: 70%;
+    height: auto;
+    border-radius: 10px;
+}

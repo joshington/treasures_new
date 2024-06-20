@@ -1,12 +1,12 @@
-const {time,loadFixture,} = require("@nomicfoundation/hardhat-toolbox/network-helpers");
+//const {time,loadFixture,} = require("@nomicfoundation/hardhat-toolbox/network-helpers");
 // const { anyValue } = require("@nomicfoundation/hardhat-chai-matchers/withArgs");
-const { expect } = require("chai");
+//const { expect } = require("chai");
 
-// describe("Lock", function () {
+//describe("Lock", function () {
 //   // We define a fixture to reuse the same setup in every test.
 //   // We use loadFixture to run this setup once, snapshot that state,
 //   // and reset Hardhat Network to that snapshot in every test.
-//   async function deployOneYearLockFixture() {
+//async function deployOneYearLockFixture() {
 //     const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
 //     const ONE_GWEI = 1_000_000_000;
 
@@ -208,5 +208,5 @@ describe("DocStorage Contract", function() {
     await docStorage.connect(addr1).addTrustee(documentId, addr2.address);
     const trustees = await docStorage.getDocumentTrustees(documentId);
     expect(trustees).to.include(addr2.address); 
-  })
+  });
 })
