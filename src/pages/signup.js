@@ -1,8 +1,14 @@
 import styled from "styled-components";
 import { useState } from "react";
-import Link from 'next/link';
 
+import Link from 'next/link';
+import { ethers } from 'ethers';
 import PasswordInput from '@/components/PasswordInput'; 
+import { connectCeloWallet } from "@/utils/connectCelo";
+import contractAbi from "../../contracts/DocStorage.abi.json";
+import { contractAddress, cUSDContractAddress } from "@/utils/constants";
+
+import { useRouter } from 'next/router';
 
 const SignupContainer = styled.div`
   display: flex;
@@ -66,10 +72,62 @@ const LinkContainer = styled.div`
 
 
 export default function Signup() {
+    const [account, setAccount] = useState(null);
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+  
+    const router = useRouter();
+    //==connect the wallet===
+    const connectWallet = async () => {
+      const account = await connectCeloWallet();
+      setAccount(account);
+    }
+  
+  //function to handle signup==
+  const signUp = async () => {
+    if (!email || !username || !password) {
+      alert("please fill in all fields");
+      return;
+    }
+
+    const provider = new ethers.providers.Web3Provider(window.celo);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, contractAbi, signer);
+
+    try {
+      e.preventDefault();
+      const tx = await contract.createUser(email, username, password);
+      await tx.await();
+
+      console.log("===my user is created=====")
+
+
+
+      //send email notification===
+      await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          subject: "Welcome to Treasures",
+          message: "Your account has been created successfully",
+        }),
+      });
+      console.log("user signup succcess....")
+      alert("User created and email sent");
+      router.push('/upload');
+
+
+    } catch (error) {
+      console.error("Error creating user:", error);
+      alert("Error creating user");
+    }
+  }
+  
 
     const handlePasswordChange = (e) => {
         setPassword(e.target.value);
@@ -82,9 +140,16 @@ export default function Signup() {
     };
 
     return (
-        <SignupContainer>
-            <SignupForm onSubmit={handleSubmit}>
+      <SignupContainer>
+        {
+            !account ? (
+              <Button onClick={connectWallet}>Connect Wallet</Button>
+          ) : (
+              <>
+                <p>Connected account: {account}</p>
+              <SignupForm onSubmit={signUp}>
                 <Title>Treasures -  Sign Up</Title>
+          
                 <Input
                     type="email"
                     placeholder="Email"
@@ -109,13 +174,17 @@ export default function Signup() {
                 <PasswordInput 
                     label="Password"
                     value={password}
+                    placeholder="Password"
                     onChange={handlePasswordChange}      
                 />
                 <Button type="submit">Sign Up</Button>
-            </SignupForm>
-            <LinkContainer>
+              </SignupForm>
+              <LinkContainer>
                 <Link href="/login">Already have an account? Login</Link>
-            </LinkContainer>
+                </LinkContainer>
+              </>
+            )
+          }
         </SignupContainer>
     );
 }

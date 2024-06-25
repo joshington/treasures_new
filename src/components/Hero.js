@@ -9,9 +9,10 @@ export default function HeroSection() {
   return (
     <section className={styles.heroSection}>
         <div className={styles.heroContent}>
-            <h1>Put Trust on Autopilot!</h1>
-            <p>Join the future of digital credentialing. Create, seal, and issue thousands of tamper-proof credentials and IDs in 3 simple steps.</p>
-            <button className={styles.ctaButton} onClick={() => router.push('/login')}>
+        <h1 style={{ fontWeight: "bold" }}>Put Confidentiality on Autopilot!</h1>
+          <h3 style={{fontSize:"22px",fontWeight:"bold"}}>Confidentiality as a Service</h3>
+            <p>Join the future of decentralized Storage. Store your valuable documents in a safe space</p>
+            <button className={styles.ctaButton} onClick={() => router.push('/upload')}>
               Get Started
             </button>
 

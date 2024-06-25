@@ -1,0 +1,440 @@
+{
+    "compiler": {
+        "version": "0.8.20+commit.a1b79de6"
+    },
+    "language": "Solidity",
+    "output": {
+        "abi": [
+            {
+                "inputs": [],
+                "stateMutability": "payable",
+                "type": "constructor"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "owner",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "ipfsHash",
+                        "type": "string"
+                    }
+                ],
+                "name": "DocumentUploaded",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "subject",
+                        "type": "string"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "body",
+                        "type": "string"
+                    }
+                ],
+                "name": "EmailNotification",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "trustee",
+                        "type": "address"
+                    }
+                ],
+                "name": "TrusteeAdded",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": false,
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "trustee",
+                        "type": "address"
+                    }
+                ],
+                "name": "TrusteeRemoved",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    }
+                ],
+                "name": "UserCreated",
+                "type": "event"
+            },
+            {
+                "anonymous": false,
+                "inputs": [
+                    {
+                        "indexed": true,
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    },
+                    {
+                        "indexed": false,
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    }
+                ],
+                "name": "UserLoggedIn",
+                "type": "event"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "trustee",
+                        "type": "address"
+                    }
+                ],
+                "name": "addTrustee",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "username",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "password",
+                        "type": "string"
+                    }
+                ],
+                "name": "createUser",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "freeTrialPeriod",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "getDocument",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    }
+                ],
+                "name": "getDocumentTrustees",
+                "outputs": [
+                    {
+                        "internalType": "address[]",
+                        "name": "",
+                        "type": "address[]"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "getUserDocuments",
+                "outputs": [
+                    {
+                        "internalType": "uint256[]",
+                        "name": "",
+                        "type": "uint256[]"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "address",
+                        "name": "user",
+                        "type": "address"
+                    }
+                ],
+                "name": "getUserEmail",
+                "outputs": [
+                    {
+                        "internalType": "string",
+                        "name": "",
+                        "type": "string"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "trustee",
+                        "type": "address"
+                    }
+                ],
+                "name": "isTrustee",
+                "outputs": [
+                    {
+                        "internalType": "bool",
+                        "name": "",
+                        "type": "bool"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "email",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "password",
+                        "type": "string"
+                    }
+                ],
+                "name": "login",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "monthlySubscriptionFee",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                    {
+                        "internalType": "address",
+                        "name": "",
+                        "type": "address"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "paySubscription",
+                "outputs": [],
+                "stateMutability": "payable",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "documentId",
+                        "type": "uint256"
+                    },
+                    {
+                        "internalType": "address",
+                        "name": "trustee",
+                        "type": "address"
+                    }
+                ],
+                "name": "removeTrustee",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "retrievalFee",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "view",
+                "type": "function"
+            },
+            {
+                "inputs": [
+                    {
+                        "internalType": "string",
+                        "name": "ipfsHash",
+                        "type": "string"
+                    }
+                ],
+                "name": "uploadDocument",
+                "outputs": [
+                    {
+                        "internalType": "uint256",
+                        "name": "",
+                        "type": "uint256"
+                    }
+                ],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            },
+            {
+                "inputs": [],
+                "name": "withdraw",
+                "outputs": [],
+                "stateMutability": "nonpayable",
+                "type": "function"
+            }
+        ],
+        "devdoc": {
+            "kind": "dev",
+            "methods": {},
+            "version": 1
+        },
+        "userdoc": {
+            "kind": "user",
+            "methods": {},
+            "notice": "a structure to store document metadata including the IPFS hash. a mapping from document ID to document metadata a mapping to track document owners and trustees ==>funcs=== funcs to upload a document and store its IPFS hash funcs to retrieve a document's IPFS hash funcs to add and remove trustees for a doc. funcs to verify doc ownership and trustee permission",
+            "version": 1
+        }
+    },
+    "settings": {
+        "compilationTarget": {
+            "contracts/DocStorage.sol": "DocStorage"
+        },
+        "evmVersion": "paris",
+        "libraries": {},
+        "metadata": {
+            "bytecodeHash": "ipfs"
+        },
+        "optimizer": {
+            "enabled": false,
+            "runs": 200
+        },
+        "remappings": []
+    },
+    "sources": {
+        "contracts/DocStorage.sol": {
+            "keccak256": "0x0674e8cc8b7b24ebc2411b37ce7e1432f5975ed2f57834db83a52b2403c9394b",
+            "license": "MIT",
+            "urls": [
+                "bzz-raw://b1a89ea223111c803fbc6d634a3ec27cf4e1d63ea204bf4c8c3e1db2a4c4fe26",
+                "dweb:/ipfs/QmXSB3ZqHXnLfsqAYtj1CuEzZ9e3Rp8JTuwV9q3Zy1Dfmi"
+            ]
+        }
+    },
+    "version": 1
+}

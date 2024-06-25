@@ -8,7 +8,7 @@ async function main() {
       "Deploying docstorage contract  with the account:",
       deployer.address
     );
-
+    
     const DocStorage = await ethers.getContractFactory("DocStorage");
     const docStorage = await DocStorage.deploy();
 

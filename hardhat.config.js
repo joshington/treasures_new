@@ -16,11 +16,28 @@ module.exports = {
   networks: {
     alfajores: {
       url: "https://alfajores-forno.celo-testnet.org",
-      accounts: [process.env.PRIVATE_KEY],
+      accounts: [process.env.ALFA_PRIVATE_KEY],
     },
-    celo: {
-      url: "https://forno.celo.org",
-      accounts: [process.env.PRIVATE_KEY],
-    },
+    // celo: {
+    //   url: "https://forno.celo.org",
+    //   accounts: [process.env.PRIVATE_KEY],
+    // },
+  },
+  etherscan: {
+    apiKey: process.env.ETHER_API_KEY,
+    customChains: [
+      {
+        network: "alfajores",
+        chainId: 44787,
+        urls: {
+          apiURL: "https://alfajores-forno.celo-testnet.org/api",
+          browserURL:"https://alfajores-forno.celo-testnet.org"
+        }
+      }
+    ]
+  },
+  sourcify: {
+    enabled:true,
   },
 };
+

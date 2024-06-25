@@ -85,7 +85,7 @@ export default function Login() {
         e.preventDefault();
         // Handle form submission logic here
         console.log({ email, password });
-        router.push('/documents');
+        router.push('/upload');
     };
 
   return (

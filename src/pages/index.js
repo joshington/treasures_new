@@ -16,7 +16,7 @@ const index = () => {
       <HowDoYouKnow />
       <Testimonials />
       <Pricing />
-      <ContactSection />
+      {/* <ContactSection /> */}
     </div>
     // <h1 className="text-3xl font-bold underline">
     //   Hello world!

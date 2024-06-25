@@ -1,17 +1,27 @@
 
-// pages/upload.js
-import { FaUpload } from 'react-icons/fa';
-import { useState } from 'react';
-import axios from 'axios';
-import styled from 'styled-components';
+import Web3 from "web3";
+import { newKitFromWeb3 } from "@celo/contractkit";
 
-const UploadContainer = styled.div`
+import { useState, useEffect } from 'react';
+import { create } from 'ipfs-http-client';
+import styled from 'styled-components';
+import Layout from '../components/Layout';
+import { FaUpload } from 'react-icons/fa';
+import styles from '../components/DocumentItem.module.css';
+
+import { ContractKitProvider, ContractKit } from '@celo/contractkit';
+//import '@celo-tools/use-contractkit/lib/styles.css';
+
+import { contractAddress, cUSDContractAddress } from '../utils/constants';
+import { SocketAddress } from "net";
+
+const ipfs = create({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' });
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f5f5f5;
   padding: 2rem;
 `;
 
@@ -24,6 +34,7 @@ const UploadForm = styled.form`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
+  margin-bottom: 2rem;
 `;
 
 const Title = styled.h2`
@@ -54,93 +65,262 @@ const Button = styled.button`
   }
 `;
 
-const ProgressBar = styled.div`
-  width: 100%;
-  background-color: #ddd;
+const WalletButton = styled.button`
+  padding: 0.75rem;
+  border: none;
   border-radius: 4px;
-  overflow: hidden;
-  margin-top: 1rem;
-`;
-
-const Progress = styled.div`
-  width: ${props => props.percentage}%;
   background-color: #0070f3;
-  height: 20px;
-  transition: width 0.2s;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top:20px;
+  align-self:center;
+  margin-left:700px;
+  margin-top:400px;
+  width:200px;
+  &:hover {
+    background-color: #005bb5;
+  }
 `;
 
-const Message = styled.p`
-  margin-top: 1rem;
-  color: ${props => (props.error ? 'red' : 'green')};
+const RetrieveButton = styled.button`
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #0070f3;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+
+  margin-top:20px;
+  margin-left:120px;
+  background-color:green;
+  border-radius:12px;
+  &:hover {
+    background-color: #8a9a5b;
+  }
 `;
 
-const IPFSLink = styled.a`
-  color: #0070f3;
-  margin-top: 1rem;
-  display: block;
-  text-align: center;
+
+const DocumentListContainer = styled.div`
+  width: 100%;
 `;
 
-export default function Upload() {
+const DocumentItem = styled.div`
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #ffffff;
+`;
+
+const Documents = () => {
+  const [account, setAccount] = useState(null);
   const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const [documents, setDocuments] = useState([]);
+  const [newTrustee, setNewTrustee] = useState('');
   const [message, setMessage] = useState('');
-  const [ipfsUrl, setIpfsUrl] = useState('');
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+  const [kit, setKit] = useState(null);
+  const [docs, setDocs] = useState(false);
+
+  const [address, setAddress] = useState(null);
+
+  
+  
+  // const cUSDContractAddress = cUSDContractAddress;// cUSD contract address on Celo mainnet
+
+  const DocumentItem = ({ name, addTrustee }) => {
+    return (
+      <div style={styles.documentItem}>
+        <h2 style={styles.myContent}>{name}</h2>
+        <h3>Trustees</h3>
+      </div>
+    );
   };
 
-  const handleSubmit = async (e) => {
+
+  useEffect(() => {
+    const storedDocuments = JSON.parse(localStorage.getItem('documents') || '[]');
+    setDocuments(storedDocuments);
+
+    const init = async () => {
+      if (window.celo) {
+        const web3 = new Web3(window.celo);
+        const kit = newKitFromWeb3(web3);
+        setKit(kit);
+
+        await window.celo.enable();
+        const accounts = await web3.eth.getAccounts();
+        setAddress(accounts[0]);
+        // window.celo.on('accountsChanged', (accounts) => {
+        //   setAccount(accounts[0] || null);
+        // });
+      } else {
+        alert('Celo extension not found. Please install it.');
+      }
+    };
+
+    init();
+  }, []);
+
+  const connectWallet = async () => {
+    try {
+      if (!window.celo) {
+        alert('Celo extension not found. Please install it.');
+        return;
+      }
+      await window.celo.enable();
+      const accounts = await window.celo.request({ method: 'eth_requestAccounts' });
+      setAccount(accounts[0]);
+    } catch (error) {
+      console.error('Error connecting wallet:', error);
+      alert('Error connecting wallet');
+    }
+  };
+
+
+
+  const uploadDocument = async () => {
+    try {
+      const added = await ipfs.add(file);
+      const ipfsHash = added.path;
+
+      const newDocument = { id: Date.now(), ipfsHash, trustees: [] };
+      const updatedDocuments = [...documents, newDocument];
+      setDocuments(updatedDocuments);
+      localStorage.setItem('documents', JSON.stringify(updatedDocuments));
+
+      setMessage('Document uploaded successfully!');
+      setFile(null);
+    } catch (error) {
+      console.error('Error uploading document:', error);
+      setMessage('Error uploading document');
+    }
+  };
+
+  //==just mae a fake upload===
+  const loadDocs = (e) => {
+    setDocs(true);
     e.preventDefault();
-    if (!file) {
-      setMessage('Please select a file to upload.');
+  }
+
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleUploadClick = async (e) => {
+    e.preventDefault();
+    if (file) {
+      await uploadDocument();
+    } else {
+      alert('Please select a file to upload');
+    }
+  };
+
+  const addTrustee = (docId) => {
+    const updatedDocuments = documents.map((doc) => {
+      if (doc.id === docId) {
+        return { ...doc, trustees: [...doc.trustees, newTrustee] };
+      }
+      return doc;
+    });
+    setDocuments(updatedDocuments);
+    localStorage.setItem('documents', JSON.stringify(updatedDocuments));
+    setNewTrustee('');
+  };
+
+  //retrieve the document
+  const retrieveDocument = async (e) => {
+    e.preventDefault();
+
+    const amountInUSD = 20; // Amount in USD
+    const exchangeRate = 1; // Placeholder exchange rate, replace with actual rate
+    const amountInCELO = Web3.utils.toWei((amountInUSD / exchangeRate).toString(), 'ether');
+
+    if (!address) {
+      alert('Please connect wallet first');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', file);
-
     try {
-      setMessage('');
-      setProgress(0);
-
-      const response = await axios.post('/api/upload', formData, {
-        onUploadProgress: (progressEvent) => {
-          const percentage = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setProgress(percentage);
-        },
-      });
-
-      setIpfsUrl(response.data.url);
-      setMessage('File uploaded successfully.');
+      //==some changes====
+      const cUSDContract = new kit.web3.eth.Contract(
+        [
+          {
+            constant: false,
+            inputs: [
+              { name: '_to', type: 'address' },
+              { name: '_value', type: 'uint256' }
+            ],
+            name: 'transfer',
+            outputs: [{ name: '', type: 'bool' }],
+            payable: false,
+            stateMutability: 'nonpayable',
+            type: 'function'
+          }
+        ],
+        cUSDContractAddress
+      );
+      
+      const tx = await cUSDContract.methods
+        .transfer(cUSDContractAddress, amountInCELO)
+        .send({ from: address });
+      
+      await tx.waitReceipt();
+      alert('payment successful, retrieving document...')
+      //logic to retrieve and show the document
     } catch (error) {
-      setMessage('Failed to upload file.');
+      console.error('Error processing payment:', error);
+      alert('Error processing payment');
     }
-  };
 
+  }
   return (
-    <UploadContainer>
-      <UploadForm onSubmit={handleSubmit}>
-        <Title>Upload Document</Title>
-        <Input type="file" onChange={handleFileChange} />
-        <Button type="submit">
-            <FaUpload />  Upload
-        </Button>
-        {progress > 0 && (
-          <ProgressBar>
-            <Progress percentage={progress} />
-          </ProgressBar>
-        )}
-        {message && <Message error={message.includes('Failed')}>{message}</Message>}
-        {ipfsUrl && (
-          <IPFSLink href={ipfsUrl} target="_blank" rel="noopener noreferrer">
-            View Uploaded Document
-          </IPFSLink>
-        )}
-      </UploadForm>
-    </UploadContainer>
+    <>
+      {!account ? (
+        <WalletButton onClick={connectWallet}>Connect Wallet</WalletButton>
+      ) : (
+        <Layout>
+          <Container>
+            <UploadForm>
+              <Title>Upload Document</Title>
+              <Input type="file" onChange={handleFileChange} />
+              <Button
+                onClick={
+                  loadDocs
+                }
+              >
+                <FaUpload /> Upload
+              </Button>
+              {message && <p>{message}</p>}
+            </UploadForm>
+
+            <DocumentListContainer>
+              <h1 style={{ fontSize: "23px", fontWeight: "bold", marginTop: "15px", marginLeft: "30px" }}>Your Documents</h1>
+              {
+                docs ? (
+                  <div style={{ alignItems: "center", justifyContent: "center" }}>
+                    <RetrieveButton onClick={retrieveDocument}>
+                      Retrieve Document
+                    </RetrieveButton>
+                    {/* <button style={{height:"20px", width:"100px"}}>
+                        <h3>Retrieve Document</h3>
+                      </button> */}
+                  </div>
+                ) : (
+                  <h3 style={{ fontSize: "20px", textAlign: "center", marginTop: "23px" }}>No documents</h3>
+                )
+              }
+              
+            </DocumentListContainer>
+          </Container>
+        </Layout>
+      )}
+    </>
+   
   );
-}
+};
+
+export default Documents;

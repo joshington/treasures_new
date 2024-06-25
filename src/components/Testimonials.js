@@ -5,20 +5,20 @@ export default function Testimonials() {
         {
         name: "John Doe",
         title: "CEO, Company One",
-        image: "/images/testimonial1.jpg",
-        quote: "Diwala has revolutionized our credentialing process. It's fast, secure, and reliable."
+        // image: "/images/testimonial1.jpg",
+        quote: "Treasures has revolutionized our storage "
         },
         {
         name: "Jane Smith",
-        title: "CTO, Company Two",
-        image: "/images/testimonial2.jpg",
-        quote: "We trust Diwala for all our digital credentialing needs. Their platform is top-notch."
+        title: "Elder",
+        // image: "/images/testimonial2.jpg",
+        quote: "Treasures has enabled me store my landtitles"
         },
         {
-        name: "Alice Johnson",
-        title: "HR Manager, Company Three",
-        image: "/images/testimonial3.jpg",
-        quote: "Diwala's platform is user-friendly and efficient. We highly recommend it."
+        name: "Joseph",
+        title: "Young Adult",
+        // image: "/images/testimonial3.jpg",
+        quote: "Through treasures i can store my Education credentials"
         }
     ];
     return (
@@ -27,7 +27,7 @@ export default function Testimonials() {
       <div className={styles.testimonials}>
         {testimonials.map((testimonial, index) => (
           <div className={styles.testimonial} key={index}>
-            <img src={testimonial.image} alt={testimonial.name} className={styles.image} />
+            {/* <img src={testimonial.image} alt={testimonial.name} className={styles.image} /> */}
             <p className={styles.quote}>"{testimonial.quote}"</p>
             <p className={styles.name}>{testimonial.name}</p>
             <p className={styles.title1}>{testimonial.title}</p>

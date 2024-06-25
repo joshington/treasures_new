@@ -7,18 +7,18 @@ export default function Pricing() {
         {
         title: "Basic",
         price: "$10/month",
-        features: ["Feature 1", "Feature 2", "Feature 3"]
+        features: ["2 weeks Free trial", "No trustee", "10 GB storage capacity"]
         },
         {
         title: "Pro",
-        price: "$30/month",
-        features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4"]
+        price: "$100/annum",
+        features: ["2 weeeks Free trial", "3 Trustees", "50 GB Storage"]
         },
-        {
-        title: "Enterprise",
-        price: "Contact Us",
-        features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"]
-        }
+        // {
+        // title: "Enterprise",
+        // price: "Contact Us",
+        // features: ["Feature 1", "Feature 2", "Feature 3", "Feature 4", "Feature 5"]
+        // }
     ];
     return (
         <section className={styles.pricingSection}>
