@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './Navbar.module.css';
+import Image from 'next/image';
+import mylogo from './images/treasures.jpg';
 
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,9 +14,14 @@ export default function Navbar() {
     return (
         <nav className={styles.navbar}>
             <div className={styles.logo}>
-                <Link href="/">
-                    Treasures
-                </Link>
+                <Image
+                    priority
+                    src={mylogo}
+                    //className={utilStyles.borderCircle}
+                    height={108}
+                    width={108}
+                    alt="logo"
+                />
             </div>
             <div className={styles.menuIcon} onClick={toggleMenu}>
                 <i className={isOpen ? 'fas fa-times' : 'fas fa-bars'}></i>

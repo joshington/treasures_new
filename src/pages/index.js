@@ -6,7 +6,7 @@ import HowDoYouKnow from '@/components/HowDoYouKnow';
 import Testimonials from '@/components/Testimonials';
 import Pricing from '@/components/Pricing';
 import ContactSection from '@/components/ContactSection';
-
+import WaitList from '@/components/WaitList';
 
 const index = () => {
   return (
@@ -14,8 +14,11 @@ const index = () => {
       <Navbar />
       <HeroSection />
       <HowDoYouKnow />
+      <WaitList />
       <Testimonials />
-      <Pricing />
+      
+      {/* <Pricing /> */}
+      
       {/* <ContactSection /> */}
     </div>
     // <h1 className="text-3xl font-bold underline">

@@ -1,11 +1,11 @@
 .heroSection {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     padding: 2rem;
     /*background-color: #f9f9f9; */
-    background-color: #E5E4E2;
-    height: 380px;
+    background-color: #293747;
+    height: 420px;
 }
 
 .heroContent {
@@ -28,16 +28,16 @@
 
 .ctaButton {
     padding: 0.8rem 1.5rem;
-    background-color: #FFD700;
-    color: #fff;
+    background-color: #7476ED; 
+    color: white;
     border: none;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.5rem;
     border-radius: 5px;
 }
 
 .heroImage img {
-    width: 700px;
+    width: 500px;
     max-width: 70%;
     height: auto;
     border-radius: 10px;

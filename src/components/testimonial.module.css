@@ -8,7 +8,8 @@
 .title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
-    color: black;
+    color: #ff7b00;
+
 }
 
 .testimonials {
@@ -48,6 +49,6 @@
 
 .title {
     font-size: 3rem;
-    color: #777;
+    color: #ff7b00;
     font-weight: bold;
 }

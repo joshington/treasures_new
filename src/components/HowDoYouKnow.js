@@ -17,7 +17,7 @@ export default function HowDoYouKnow() {
   return (
     <section className={styles.howSection}>
       <div className={styles.container}>
-        <h2 className={styles.title}>How Do You Know?</h2>
+        <h2 className={styles.title}>What we stand for?</h2>
         <p className={styles.subtitle}>We take care of storing your valuable documents</p>
         <div className={styles.cards}>
           <div className={styles.card}>

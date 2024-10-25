@@ -3,20 +3,20 @@ import styles from './testimonial.module.css';
 export default function Testimonials() {
     const testimonials = [
         {
-        name: "John Doe",
-        title: "CEO, Company One",
+        name: "Jovan Mwesigwa",
+        title: "Oneramp Founder",
         // image: "/images/testimonial1.jpg",
         quote: "Treasures has revolutionized our storage "
         },
         {
-        name: "Jane Smith",
-        title: "Elder",
+        name: "Kiyingi Raymond",
+        title: "Entrepreneuer",
         // image: "/images/testimonial2.jpg",
         quote: "Treasures has enabled me store my landtitles"
         },
         {
-        name: "Joseph",
-        title: "Young Adult",
+        name: "Maria",
+        title: "Parent",
         // image: "/images/testimonial3.jpg",
         quote: "Through treasures i can store my Education credentials"
         }
