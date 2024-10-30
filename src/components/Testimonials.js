@@ -6,24 +6,24 @@ export default function Testimonials() {
         name: "Jovan Mwesigwa",
         title: "Oneramp Founder",
         // image: "/images/testimonial1.jpg",
-        quote: "Treasures has revolutionized our storage "
+        quote: "To the SMEs in Uganda, this technology will allow agility, trust, scale and much more, contribute to saving the environment."
         },
         {
         name: "Kiyingi Raymond",
-        title: "Entrepreneuer",
+        title: "RealEstate Entrepreeur",
         // image: "/images/testimonial2.jpg",
-        quote: "Treasures has enabled me store my landtitles"
+        quote: "I believe Treasures will help curb counterfeit issues regarding land titles"
         },
         {
         name: "Maria",
         title: "Parent",
         // image: "/images/testimonial3.jpg",
-        quote: "Through treasures i can store my Education credentials"
+        quote: "I honestly believe treasures will revolutionalize digital crendentialing,In academic institutions"
         }
     ];
     return (
     <section className={styles.testimonialsSection}>
-      <h2 className={styles.title}>Client Testimonials</h2>
+      <h2 className={styles.title}>Client Prospects</h2>
       <div className={styles.testimonials}>
         {testimonials.map((testimonial, index) => (
           <div className={styles.testimonial} key={index}>

@@ -33,7 +33,7 @@ export default function Navbar() {
                     </Link>
                 </li>
                 <li className={styles.navItem}>
-                    <Link href="/about">
+                    <Link href="/about" className={styles.navLink}>
                         About
                     </Link>
                 </li>

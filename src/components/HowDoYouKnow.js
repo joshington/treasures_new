@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { SiBlockchaindotcom } from "react-icons/si";
 import { GrStorage } from "react-icons/gr";
 import { FaUserShield } from "react-icons/fa";
+import { GrDocumentStore } from "react-icons/gr";
 
 const LogoContainer = styled.div`
   height:70px;
@@ -39,6 +40,17 @@ export default function HowDoYouKnow() {
             <FaUserShield style={{ fontSize: "50px", textAlign: "center", marginLeft: "70px", marginBottom:'9px'}} />
             <h3 className={styles.cardTitle}>Shared Ownership</h3>
             <p className={styles.cardDescription}>Users can Add Trustees to their treasures.</p>
+          </div>
+          <div className={styles.card}>
+            {/* <img src="/images/icon3.svg" alt="Icon 3" className={styles.icon} /> */}
+            <GrDocumentStore style={{ 
+              fontSize: "50px", textAlign: "center", 
+              marginLeft: "70px", marginBottom:'9px'}} 
+            />
+            <h3 className={styles.cardTitle}>Digital Credentialing</h3>
+            <p className={styles.cardDescription}>
+              Put trust on autopilot with secure digital verification
+            </p>
           </div>
         </div>
       </div>

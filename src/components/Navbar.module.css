@@ -35,9 +35,9 @@
 
 .navLink {
     text-decoration: none;
-    color: #333;
-    font-size: 1rem;
-    font-weight: 500;
+    color:#293747;
+    font-size: 1.5rem;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {
